@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Admin Paneli - YAŞAR BARAN YİĞİT</title>
+<link rel="stylesheet" href="/css/admin.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="<%= currentThemeClass %>">
+
+<header>
+    <h1>Admin Paneli</h1>
+    <p>YAŞAR BARAN YİĞİT Portfolio Yönetimi</p>
+</header>
+
+<main>
+    <!-- Öneriler -->
+    <section class="admin-section">
+        <h2>Öneriler</h2>
+        <% if (suggestions && suggestions.length) { %>
+        <ul>
+            <% suggestions.forEach(s => { %>
+            <li>
+                <strong><%= s.name %></strong> (<%= s.email %>)<br>
+                <%= s.message %><br>
+                <form action="/admin/delete/suggestion/<%= s.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Öneri bulunamadı.</p>
+        <% } %>
+    </section>
+
+    <!-- Eğitim -->
+    <section class="admin-section">
+        <h2>Eğitim</h2>
+        <% if (education && education.length) { %>
+        <ul>
+            <% education.forEach(e => { %>
+            <li>
+                <strong><%= e.level %></strong> - <%= e.school %> (<%= e.year %>) GPA: <%= e.gpa %>
+                <form action="/admin/delete/education/<%= e.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Henüz eğitim eklenmemiş.</p>
+        <% } %>
+        <form action="/admin/add/education" method="POST" class="add-form">
+            <input type="text" name="level" placeholder="Düzey" required>
+            <input type="text" name="school" placeholder="Okul" required>
+            <input type="text" name="year" placeholder="Yıl" required>
+            <input type="text" name="gpa" placeholder="GPA">
+            <button type="submit">Ekle</button>
+        </form>
+    </section>
+
+    <!-- Deneyim -->
+    <section class="admin-section">
+        <h2>Deneyim</h2>
+        <% if (experience && experience.length) { %>
+        <ul>
+            <% experience.forEach(ex => { %>
+            <li>
+                <strong><%= ex.role %></strong> - <%= ex.company %> (<%= ex.period %>)
+                <p><%= ex.description %></p>
+                <form action="/admin/delete/experience/<%= ex.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Henüz deneyim eklenmemiş.</p>
+        <% } %>
+        <form action="/admin/add/experience" method="POST" class="add-form">
+            <input type="text" name="role" placeholder="Pozisyon" required>
+            <input type="text" name="company" placeholder="Firma" required>
+            <input type="text" name="period" placeholder="Dönem" required>
+            <textarea name="description" placeholder="Açıklama"></textarea>
+            <button type="submit">Ekle</button>
+        </form>
+    </section>
+
+    <!-- Projeler -->
+    <section class="admin-section">
+        <h2>Projeler</h2>
+        <% if (projects && projects.length) { %>
+        <ul>
+            <% projects.forEach(p => { %>
+            <li>
+                <strong><%= p.title %></strong> - <%= p.tech %>
+                <p><%= p.description %></p>
+                <form action="/admin/delete/project/<%= p.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Henüz proje eklenmemiş.</p>
+        <% } %>
+        <form action="/admin/add/project" method="POST" class="add-form">
+            <input type="text" name="title" placeholder="Başlık" required>
+            <input type="text" name="tech" placeholder="Teknolojiler" required>
+            <input type="text" name="category" placeholder="Kategori" required>
+            <textarea name="description" placeholder="Açıklama"></textarea>
+            <button type="submit">Ekle</button>
+        </form>
+    </section>
+
+    <!-- Yetkinlikler -->
+    <section class="admin-section">
+        <h2>Yetkinlikler</h2>
+        <% if (skills && skills.length) { %>
+        <ul>
+            <% skills.forEach(skill => { %>
+            <li>
+                <strong><%= skill.name %></strong> (<%= skill.percent %>%)
+                <form action="/admin/delete/skill/<%= skill.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Henüz yetkinlik eklenmemiş.</p>
+        <% } %>
+        <form action="/admin/add/skill" method="POST" class="add-form">
+            <input type="text" name="name" placeholder="Yetkinlik Adı" required>
+            <input type="number" name="percent" placeholder="Yüzde" required>
+            <button type="submit">Ekle</button>
+        </form>
+    </section>
+
+    <!-- Temalar -->
+    <section class="admin-section">
+        <h2>Temalar</h2>
+        <% if (themes && themes.length) { %>
+        <ul>
+            <% themes.forEach(t => { %>
+            <li style="background:<%= t.color %>"><%= t.name %>
+                <form action="/admin/delete/theme/<%= t.id %>" method="POST" style="display:inline;">
+                    <button class="delete-btn">Sil</button>
+                </form>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Henüz tema eklenmemiş.</p>
+        <% } %>
+        <form action="/admin/add/theme" method="POST" class="add-form">
+            <input type="text" name="name" placeholder="Tema Adı" required>
+            <input type="color" name="color" placeholder="Renk Kodu" required>
+            <button type="submit">Ekle</button>
+        </form>
+    </section>
+</main>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

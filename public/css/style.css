@@ -1,0 +1,194 @@
+:root {
+  --main-color: #ffcc00;
+  --bg-color: linear-gradient(135deg,#434343,#000);
+  --card-bg: rgba(255,255,255,0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0; padding:0;
+  background: var(--bg-color);
+  color:#f1f1f1;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+#particles-js {
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  z-index:-1;
+}
+
+header {
+  padding:60px 20px;
+  background: linear-gradient(135deg,#555,#222);
+  box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+header h1 {
+  font-size:3em;
+  margin-bottom:10px;
+  color: var(--main-color);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+header p { font-size:1.2em; color:#ddd; }
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px var(--main-color); }
+  to { text-shadow: 0 0 20px var(--main-color), 0 0 30px #ffaa00; }
+}
+
+.menu-list {
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:0; margin:20px 0;
+  flex-wrap:wrap;
+}
+.menu-list li a {
+  color:var(--main-color);
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+.menu-list li a:hover { color:#ffaa00; transform:scale(1.1); }
+
+#theme-buttons button {
+  border:none;
+  padding:10px 18px;
+  margin:5px;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
+  transition:0.3s;
+}
+#theme-buttons button:hover {
+  transform:scale(1.1);
+  box-shadow:0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* Kartlar ve Animasyon */
+.cards {
+  max-width:1000px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:0 20px;
+}
+.card {
+  background: var(--card-bg);
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.8s ease, filter 0.3s ease;
+  perspective: 1000px;
+  opacity:0;
+  transform: translateY(30px);
+}
+.card:hover {
+  transform: translateY(-10px) rotateY(5deg);
+  box-shadow:0 15px 35px rgba(0,0,0,0.5);
+  filter: brightness(1.2);
+}
+.card h3 { margin-top:0; color: var(--main-color); }
+.card p { line-height:1.5; }
+
+/* Project filtreleri */
+.project-filters {
+  text-align:center;
+  margin-bottom:20px;
+}
+.project-filters button {
+  background-color: var(--main-color);
+  color:#000;
+  border:none;
+  padding:10px 15px;
+  margin:5px;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.project-filters button::after {
+  content:'';
+  position:absolute;
+  width:100%;
+  height:0%;
+  top:0; left:0;
+  background: rgba(255,255,255,0.2);
+  transition: height 0.3s ease;
+  z-index:1;
+}
+.project-filters button:hover::after { height:100%; }
+.project-filters button:hover { transform: scale(1.1); }
+
+/* Contact Form */
+.contact-form, form {
+  max-width:500px;
+  margin:40px auto;
+  display:flex;
+  flex-direction:column;
+}
+.contact-form input, .contact-form textarea, form input, form textarea {
+  margin-bottom:15px;
+  padding:10px;
+  border-radius:6px;
+  border:none;
+  font-size:1em;
+}
+.contact-form button, form button {
+  background-color: var(--main-color);
+  color:#000;
+  border:none;
+  padding:12px;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+.contact-form button:hover, form button:hover {
+  background-color:#ffaa00;
+  transform:scale(1.05);
+}
+
+/* Yetkinlikler (düz bar) */
+.skills-container { max-width:800px; margin:0 auto; padding:20px; text-align:left; }
+.skill-bar { margin-bottom:20px; opacity:0; transform: translateY(30px); transition: all 0.8s ease; }
+.skill-bar p { margin:0 0 5px 0; font-weight:bold; color:var(--main-color); }
+.progress {
+  background-color: rgba(255,255,255,0.1);
+  border-radius:10px;
+  height:20px;
+  overflow:hidden;
+}
+.progress-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--main-color), #ffaa00);
+  width:0;
+  transition: width 1s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content:'';
+  position:absolute;
+  top:0; left:-50%;
+  width:50%; height:100%;
+  background: rgba(255,255,255,0.3);
+  animation: shine 1.5s linear infinite;
+}
+@keyframes shine { 0% { left:-50%; } 100% { left:100%; } }
+
+/* Responsive */
+@media(max-width:768px) {
+  .cards { grid-template-columns:1fr; }
+  .menu-list { flex-direction:column; gap:10px; }
+  header h1 { font-size:2.2em; }
+  header p { font-size:1em; }
+}

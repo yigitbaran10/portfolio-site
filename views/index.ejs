@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>YAŞAR BARAN YİĞİT</title>
+<link rel="stylesheet" href="/css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+  <h1>YAŞAR BARAN YİĞİT</h1>
+  <p>Bilgisayar Mühendisi & Kodlama Eğitmeni</p>
+  <nav>
+    <ul class="menu-list">
+      <li><a href="#education">Eğitim</a></li>
+      <li><a href="#experience">Deneyim</a></li>
+      <li><a href="#projects">Projeler</a></li>
+      <li><a href="#skills">Yetkinlikler</a></li>
+      <li><a href="#contact">İletişim</a></li>
+    </ul>
+  </nav>
+  <div id="theme-buttons">
+    <% themes.forEach(t => { %>
+      <button style="background:<%= t.color %>" onclick="setTheme('<%= t.color %>')"><%= t.name %></button>
+    <% }) %>
+  </div>
+</header>
+
+<main>
+
+<!-- Eğitim -->
+<section id="education">
+  <h2>Eğitim</h2>
+  <div class="cards">
+    <% education.forEach(e => { %>
+      <div class="card">
+        <h3><%= e.level %></h3>
+        <p><strong>Okul:</strong> <%= e.school %></p>
+        <p><strong>Yıl:</strong> <%= e.year %></p>
+        <p><strong>GPA:</strong> <%= e.gpa %></p>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- Deneyim -->
+<section id="experience">
+  <h2>Deneyim</h2>
+  <div class="cards">
+    <% experience.forEach(ex => { %>
+      <div class="card">
+        <h3><%= ex.role %> @ <%= ex.company %></h3>
+        <p><strong>Dönem:</strong> <%= ex.period %></p>
+        <p><%= ex.description %></p>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- Projeler -->
+<section id="projects">
+  <h2>Projeler</h2>
+  <div class="project-filters">
+    <button type="button" onclick="filterProjects('all')">Tümü</button>
+    <button type="button" onclick="filterProjects('web')">Web</button>
+    <button type="button" onclick="filterProjects('robotik')">Robotik</button>
+    <button type="button" onclick="filterProjects('php')">PHP</button>
+  </div>
+  <div class="cards">
+    <% projects.forEach(p => { %>
+      <div class="card project-card" data-category="<%= p.category %>">
+        <h3><%= p.title %></h3>
+        <p><strong>Teknolojiler:</strong> <%= p.tech %></p>
+        <p><%= p.description %></p>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- Yetkinlikler -->
+<section id="skills">
+  <h2>Yetkinlikler</h2>
+  <div class="skills-container">
+    <% skills.forEach(skill => { %>
+      <div class="skill-bar">
+        <p><%= skill.name %> (<%= skill.percent %>%)</p>
+        <div class="progress">
+          <div class="progress-fill" style="width: <%= skill.percent %>%"></div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- İletişim -->
+<section id="contact">
+  <h2>İletişim</h2>
+  <form action="/suggestion" method="POST" class="contact-form">
+    <input type="text" name="name" placeholder="Adınız" required>
+    <input type="email" name="email" placeholder="E-posta" required>
+    <textarea name="message" placeholder="Mesajınız" required></textarea>
+    <button type="submit">Gönder</button>
+  </form>
+  <% if (successMessage) { %>
+    <p class="success-message"><%= successMessage %></p>
+  <% } %>
+  <% if (errorMessage) { %>
+    <p class="error-message"><%= errorMessage %></p>
+  <% } %>
+</section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script src="/js/script.js"></script>
+<script>
+const setTheme = color => document.body.style.setProperty('--main-color', color);
+
+// Yetkinlikler animasyonu
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.progress-fill').forEach(bar => {
+    const width = bar.style.width;
+    bar.style.width = '0';
+    setTimeout(() => { bar.style.width = width; }, 100);
+  });
+});
+
+// Proje filtreleme
+function filterProjects(category){
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.style.display = (category==='all'||card.dataset.category===category)?'block':'none';
+  });
+}
+</script>
+
+</body>
+</html>
