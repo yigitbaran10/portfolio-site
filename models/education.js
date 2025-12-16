@@ -1,6 +1,6 @@
-//const db = require('./db');
+const db = require('./db');
 
-//class Education {
+class Education {
    static async getAll() {
      const [rows] = await db.query('SELECT * FROM education');
       return rows;
