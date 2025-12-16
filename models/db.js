@@ -8,3 +8,15 @@
 //});
 
 //module.exports = db;
+// db.js
+
+// Dummy DB objesi
+const db = {
+    query: async (sql, params) => {
+        console.log("DB çağrısı atlandı:", sql);
+        return [[], []]; // boş sonuç döndür
+    }
+};
+
+module.exports = db;
+
